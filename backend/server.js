@@ -10,14 +10,24 @@ require('dotenv').config();
 
 const app = express();
 // Enable CORS for your Vite frontend
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true
-}));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://task-management-application-teal.vercel.app",
+];
 
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 
-// Middleware
-app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB

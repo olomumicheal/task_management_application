@@ -5,6 +5,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const authRoutes = require('./routes/auth');
+const taskRoutes = require("./routes/tasks")
+const adminRoutes = require("./routes/admin")
 require('dotenv').config();
 
 
@@ -41,7 +43,10 @@ app.get('/', (req, res) => {
     res.send('Task Management API is running...');
 });
 
+
 app.use('/api/auth', authRoutes);
+app.use("/api/tasks", taskRoutes)
+app.use("/api/admin", adminRoutes)
 
 // Start the server
 const PORT = process.env.PORT || 5000;
